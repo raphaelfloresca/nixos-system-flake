@@ -10,13 +10,6 @@
       ./hardware-configuration.nix
     ];
   
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      vimjoyer = import ./home.nix;
-    };  
-  };
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.supportedFilesystems = [ "btrfs" ];
   hardware.enableAllFirmware = true;
