@@ -113,10 +113,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  # Enable fish
+  programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raphael = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
   };
 
   # List packages installed in system profile. To search, run:
@@ -129,11 +133,13 @@
     mako
     swww
     kitty
-    emacs
+    emacs29-pgtk
     chromium
     xarchiver
     git
     pavucontrol
+    gh
+    fishPlugins.tide
   ];
 
   # Fonts
