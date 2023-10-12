@@ -140,6 +140,7 @@
     pavucontrol
     gh
     fishPlugins.tide
+    home-manager
   ];
 
   # Fonts
