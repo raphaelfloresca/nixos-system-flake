@@ -141,6 +141,12 @@
     gh
     fishPlugins.tide
     home-manager
+    yt-dlp
+    mpv
+    swaylock-effects
+    wlogout
+    ncspot
+    logseq
   ];
 
   # Fonts
@@ -151,6 +157,8 @@
     noto-fonts-emoji
     meslo-lgs-nf
   ];
+
+  security.pam.services.swaylock = {};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
