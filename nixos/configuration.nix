@@ -147,6 +147,11 @@
     wlogout
     ncspot
     logseq
+    tmux
+    cava
+    bluetuith
+    ncpamixer
+    nix-direnv
   ];
 
   # Fonts
