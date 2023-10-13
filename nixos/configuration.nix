@@ -4,17 +4,23 @@
 
 { inputs, config, pkgs, ... }:
 
+let
+  customNodePackages = pkgs.callPackage /home/raphael/system/nixos/customNodePackages {  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.supportedFilesystems = [ "btrfs" ];
   hardware.enableAllFirmware = true;
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  boot.initrd.systemd.enable = true;
+  boot.plymouth.enable = true;
+  boot.kernelParams = [ "quiet" ];
 
   # Use the GRUB EFI boot loader.
   boot.loader = {
@@ -62,6 +68,7 @@
 
   # Enable SDDM
   services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.theme = "catppuccin-sddm-corners";
 
   # Enabling hyprland on NixOS
   programs.hyprland = {
@@ -155,10 +162,45 @@
     krita
     inkscape-with-extensions
     libsForQt5.kdenlive
+    notion-app-enhanced
+    weechat
+    catppuccin-sddm-corners
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtsvg
+    nodejs_20
+    node2nix
+    nodePackages.node-gyp
+    nodePackages.node-pre-gyp
+    cairo
+    pango
+    customNodePackages.excalidraw_export
   ];
 
+  # Overlays for bitlbee
+  nixpkgs.overlays = [ (final: prev:
+    {
+      weechat = prev.weechat.override {
+        configure = { availablePlugins, ... }: {
+          scripts = with prev.weechatScripts; [
+            wee-slack
+          ];
+        };
+      };
+    })
+  ];
+
+  # Enable bitlbee
+  services.bitlbee = {
+    enable = true;
+    plugins = [
+      pkgs.bitlbee-facebook
+    ];
+  };
+
+
   # Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-serif
     noto-fonts-cjk-sans
