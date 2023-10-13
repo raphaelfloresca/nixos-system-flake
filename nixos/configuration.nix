@@ -133,7 +133,6 @@
     mako
     swww
     kitty
-    emacs29-pgtk
     chromium
     xarchiver
     git
@@ -152,6 +151,10 @@
     bluetuith
     ncpamixer
     nix-direnv
+    gimp-with-plugins
+    krita
+    inkscape-with-extensions
+    libsForQt5.kdenlive
   ];
 
   # Fonts
@@ -164,6 +167,12 @@
   ];
 
   security.pam.services.swaylock = {};
+
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacs29; # replace with emacs-gtk, or a version provided by the community overlay if desired.
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
