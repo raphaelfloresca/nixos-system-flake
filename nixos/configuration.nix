@@ -4,9 +4,6 @@
 
 { inputs, config, pkgs, ... }:
 
-let
-  customNodePackages = pkgs.callPackage /home/raphael/system/nixos/customNodePackages {  };
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -81,6 +78,7 @@ in
     WLR_NO_HARDWARE_CURSORS = "1";
     # Hint electron apps to use wayland
     NIXOS_OZONE_WL = "1";
+    LD_LIBRARY_PATH = "${libuuid.out}/lib";
   };
 
   # Portals
@@ -169,12 +167,7 @@ in
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtsvg
     nodejs_20
-    node2nix
-    nodePackages.node-gyp
-    nodePackages.node-pre-gyp
-    cairo
-    pango
-    customNodePackages.excalidraw_export
+    libuuid
   ];
 
   # Overlays for bitlbee
@@ -197,7 +190,6 @@ in
       pkgs.bitlbee-facebook
     ];
   };
-
 
   # Fonts
   fonts.packages = with pkgs; [
